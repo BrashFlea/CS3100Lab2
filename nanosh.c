@@ -1,5 +1,5 @@
 /* 
- CS 3100 Lab 2 - by YOUR NAME HERE
+ CS 3100 Lab 2 - by Jonathan Mirabile
 */
 
 #include <stdio.h>
@@ -12,6 +12,7 @@
 #include <sys/wait.h>
 
 void cmdExit(int argc, char **argv) {
+	exit(0);
 }
 
 // getParameters returns the argc, the number of words found in cmd
@@ -59,6 +60,21 @@ int main(int argc, char **argv) {
 		// add if statements here for the other internal commands
 		//   and a default action that calls a function to fork()
 		//   and exec() while the parent issues waitpid()
+		if (strcmp(myArgv[0], "pwd") == 0) {
+
+
+		}
+
+		if ((strcmp(myArgv[0], "cd") == 0) && (myArgc == 0)) {
+
+
+		}
+
+		if ((strcmp(myArgv[0], "cd") == 0) && (myArgc == 1)) {
+
+
+		}
+
 	}
 
 	return 0;
