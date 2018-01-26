@@ -34,6 +34,7 @@ int main(int argc, char **argv) {
 
 	char cmd[1024];
 	char *rc;
+    int fint;
 	int myArgc = 0;
 	char *myArgv[1000];
     char cwd[1024];
@@ -63,7 +64,7 @@ int main(int argc, char **argv) {
             //PRINT ERROR
             errno = EINVAL;
             perror("Error: exit takes zero arguments");
-            continue;ls
+            continue;
         }
 
 		// add if statements here for the other internal commands
@@ -106,7 +107,10 @@ int main(int argc, char **argv) {
         }
 
         //ANYOTHERCOMMAND
-        
+        fint = fork();
+
+        if()
+
 
 
 	}
