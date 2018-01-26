@@ -53,20 +53,28 @@ int main(int argc, char **argv) {
 		}
 
 		// if the first word is "exit", terminate the program
-		if (strcmp(myArgv[0], "exit") == 0) {
+		if (strcmp(myArgv[0], "exit") == 0 && (myArgc == 1)) {
 			cmdExit(myArgc, myArgv);
 			continue;
 		}
+
+        // EXIT ERROR
+        if (strcmp(myArgv[0], "exit") == 0 && (myArgc > 1)) {
+            //PRINT ERROR
+            errno = EINVAL;
+            perror("Error: exit takes zero arguments");
+            continue;ls
+        }
 
 		// add if statements here for the other internal commands
 		//   and a default action that calls a function to fork()
 		//   and exec() while the parent issues waitpid()
 
         // PWD no args
-		if (strcmp(myArgv[0], "pwd") == 0) {
+		if (strcmp(myArgv[0], "pwd") == 0 && (myArgc == 1)) {
             getcwd(cwd, sizeof(cwd));
             printf("%s\n", cwd);
-
+            continue;
 		}
 
         // PWD with args (error)
@@ -77,25 +85,28 @@ int main(int argc, char **argv) {
             continue;
         }
 
-        //Default cd
+        //Default CD
 		if ((strcmp(myArgv[0], "cd") == 0) && (myArgc == 1)) {
             chdir(getenv("HOME"));
             continue;
 		}
 
-        //cd NEWDIR
+        //CD NEWDIR
 		if ((strcmp(myArgv[0], "cd") == 0) && (myArgc == 2)) {
-
-
+            chdir(myArgv[1]);
+            continue;
 		}
 
-        //cd error
+        //CD ERROR
         if ((strcmp(myArgv[0], "cd") == 0) && (myArgc > 2)) {
-
-
+            //PRINT ERROR
+            errno = EINVAL;
+            perror("Error: cwd takes 1 optional argument");
+            continue;
         }
 
         //ANYOTHERCOMMAND
+        
 
 
 	}
