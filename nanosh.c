@@ -35,6 +35,7 @@ int main(int argc, char **argv) {
 	char cmd[1024];
 	char *rc;
     int fint;
+	int status;
 	int myArgc = 0;
 	char *myArgv[1000];
     char cwd[1024];
@@ -109,7 +110,17 @@ int main(int argc, char **argv) {
         //ANYOTHERCOMMAND
         fint = fork();
 
-        if()
+        if(fint > 0){
+			waitpid(fint, &status, 0);
+			continue;
+		}
+		else if (fint == 0){
+			execvp(cmd, myArgv);
+			exit(1);
+		} else {
+			perror("execvp failed: unknown command passed as argument");
+			exit(1);
+		}
 
 
 
