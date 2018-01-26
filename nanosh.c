@@ -36,6 +36,7 @@ int main(int argc, char **argv) {
 	char *rc;
 	int myArgc = 0;
 	char *myArgv[1000];
+    char cwd[1024];
 
 	while (1) {
 		printf("nanosh: ");
@@ -60,20 +61,42 @@ int main(int argc, char **argv) {
 		// add if statements here for the other internal commands
 		//   and a default action that calls a function to fork()
 		//   and exec() while the parent issues waitpid()
+
+        // PWD no args
 		if (strcmp(myArgv[0], "pwd") == 0) {
-
-
-		}
-
-		if ((strcmp(myArgv[0], "cd") == 0) && (myArgc == 0)) {
-
+            getcwd(cwd, sizeof(cwd));
+            printf("%s\n", cwd);
 
 		}
 
+        // PWD with args (error)
+        if ((strcmp(myArgv[0], "pwd") == 0) && (myArgc > 1)) {
+            //PRINT ERROR
+            errno = EINVAL;
+            perror("Error: pwd takes zero arguments");
+            continue;
+        }
+
+        //Default cd
 		if ((strcmp(myArgv[0], "cd") == 0) && (myArgc == 1)) {
+            chdir(getenv("HOME"));
+            continue;
+		}
+
+        //cd NEWDIR
+		if ((strcmp(myArgv[0], "cd") == 0) && (myArgc == 2)) {
 
 
 		}
+
+        //cd error
+        if ((strcmp(myArgv[0], "cd") == 0) && (myArgc > 2)) {
+
+
+        }
+
+        //ANYOTHERCOMMAND
+
 
 	}
 
