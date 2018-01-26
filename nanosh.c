@@ -36,6 +36,7 @@ int main(int argc, char **argv) {
 	char *rc;
     int fint;
 	int status;
+	int chdirstatus;
 	int myArgc = 0;
 	char *myArgv[1000];
     char cwd[1024];
@@ -95,7 +96,11 @@ int main(int argc, char **argv) {
 
         //CD NEWDIR
 		if ((strcmp(myArgv[0], "cd") == 0) && (myArgc == 2)) {
-            chdir(myArgv[1]);
+            chdirstatus = chdir(myArgv[1]);
+			if (chdirstatus != 0){
+				errno = EINVAL;
+				perror("No such file or directory");
+			}
             continue;
 		}
 
@@ -116,14 +121,13 @@ int main(int argc, char **argv) {
 		}
 		else if (fint == 0){
 			execvp(cmd, myArgv);
-			exit(1);
-		} else {
 			perror("execvp failed: unknown command passed as argument");
 			exit(1);
+		} else {
+			perror("fork failed: no child process created");
+			exit(1);
 		}
-
-
-
+		
 	}
 
 	return 0;
